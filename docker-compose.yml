@@ -1,0 +1,19 @@
+version: '3.4'
+services:
+  localstack:
+    container_name: LocalStack
+    image: localstack/localstack:0.14.2
+    ports:
+      - '4566-4597:4566-4597'
+    environment:
+      - SERVICES=cognito,sqs,s3
+      - DEBUG=0
+      - AWS_ACCESS_KEY=SOME_KEY
+      - AWS_SECRET_KEY=SOME_KEY
+      - AWS_DEFAULT_REGION=us-east-1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOSTNAME_EXTERNAL=localhost
+    volumes:
+      - ./LocalStack.Setup:/docker-entrypoint-initaws.d/
+      - /tmp/localstack:/tmp/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
